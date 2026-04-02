@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  build:
+    desc: Build the API server
+    cmds:
+      - go build -o ./tmp/server ./cmd/server
+
+  test:
+    desc: Run Go tests
+    cmds:
+      - go test ./...
+
+  lint:
+    desc: Run Go linter
+    cmds:
+      - golangci-lint run ./...
+
+  generate:
+    desc: Generate sqlc code
+    cmds:
+      - sqlc generate

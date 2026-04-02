@@ -1,0 +1,1369 @@
+components:
+  schemas:
+    handler.AssetCompositionResponse:
+      properties:
+        asset_type:
+          type: string
+        total:
+          type: integer
+      required:
+      - asset_type
+      - total
+      type: object
+    handler.AssetTrendResponse:
+      properties:
+        asset_type:
+          type: string
+        date:
+          type: string
+        total:
+          type: integer
+      required:
+      - asset_type
+      - date
+      - total
+      type: object
+    handler.BudgetPeriodResponse:
+      properties:
+        budget:
+          type: integer
+        category_name:
+          type: string
+        created_at:
+          type: string
+        id:
+          type: integer
+        period:
+          type: string
+        rollover:
+          type: integer
+        spent:
+          type: integer
+        updated_at:
+          type: string
+      required:
+      - budget
+      - category_name
+      - created_at
+      - id
+      - period
+      - rollover
+      - spent
+      - updated_at
+      type: object
+    handler.BudgetWithProgressResponse:
+      properties:
+        category_name:
+          type: string
+        color:
+          type: string
+        monthly_budget:
+          type: integer
+        rollover:
+          type: integer
+        rollover_enabled:
+          type: boolean
+        spent:
+          type: integer
+      required:
+      - category_name
+      - color
+      - monthly_budget
+      - rollover
+      - rollover_enabled
+      - spent
+      type: object
+    handler.CashFlowResponse:
+      properties:
+        expenses:
+          type: integer
+        income:
+          type: integer
+        month:
+          type: string
+      required:
+      - expenses
+      - income
+      - month
+      type: object
+    handler.CategoryBudgetResponse:
+      properties:
+        category_name:
+          type: string
+        color:
+          type: string
+        monthly_budget:
+          type: integer
+        rollover:
+          type: integer
+        rollover_enabled:
+          type: boolean
+        spent:
+          type: integer
+      required:
+      - category_name
+      - color
+      - monthly_budget
+      - rollover
+      - rollover_enabled
+      - spent
+      type: object
+    handler.ChatMessageResponse:
+      properties:
+        content:
+          type: string
+        created_at:
+          type: string
+        id:
+          type: string
+        role:
+          type: string
+      required:
+      - content
+      - created_at
+      - id
+      - role
+      type: object
+    handler.ChatRequest:
+      properties:
+        conversation_id:
+          type: string
+        message:
+          type: string
+        model:
+          type: string
+      required:
+      - message
+      type: object
+    handler.ConversationDetailResponse:
+      properties:
+        created_at:
+          type: string
+        id:
+          type: string
+        messages:
+          items:
+            $ref: '#/components/schemas/handler.ChatMessageResponse'
+          type: array
+        model:
+          type: string
+        title:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - created_at
+      - id
+      - messages
+      - model
+      - title
+      - updated_at
+      type: object
+    handler.ConversationResponse:
+      properties:
+        created_at:
+          type: string
+        id:
+          type: string
+        model:
+          type: string
+        title:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - created_at
+      - id
+      - model
+      - title
+      - updated_at
+      type: object
+    handler.CreateGoalRequest:
+      properties:
+        color:
+          type: string
+        current_amount:
+          type: integer
+        deadline:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+        target_amount:
+          type: integer
+      required:
+      - name
+      - target_amount
+      type: object
+    handler.DailyRankingResponse:
+      properties:
+        account_name:
+          type: string
+        asset_type:
+          type: string
+        change:
+          type: integer
+        current_balance:
+          type: integer
+        institution_name:
+          type: string
+        previous_balance:
+          type: integer
+      required:
+      - account_name
+      - asset_type
+      - change
+      - current_balance
+      - institution_name
+      - previous_balance
+      type: object
+    handler.DashboardResponse:
+      properties:
+        category_budgets:
+          items:
+            $ref: '#/components/schemas/handler.CategoryBudgetResponse'
+          type: array
+        monthly_summary:
+          $ref: '#/components/schemas/handler.MonthlySummaryResponse'
+        net_worth:
+          $ref: '#/components/schemas/handler.NetWorthResponse'
+        recent_transactions:
+          items:
+            $ref: '#/components/schemas/handler.RecentTransactionResponse'
+          type: array
+        spending_pace:
+          $ref: '#/components/schemas/handler.SpendingPaceResponse'
+      required:
+      - category_budgets
+      - monthly_summary
+      - net_worth
+      - recent_transactions
+      - spending_pace
+      type: object
+    handler.DataWrapper:
+      properties:
+        data: {}
+      type: object
+    handler.ErrorResponse:
+      properties:
+        code:
+          type: string
+        error:
+          type: string
+        fields:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+    handler.HealthResponse:
+      properties:
+        database:
+          example: connected
+          type: string
+        status:
+          example: ok
+          type: string
+      required:
+      - database
+      - status
+      type: object
+    handler.InsightResponse:
+      properties:
+        action_url:
+          type: string
+        created_at:
+          type: string
+        description:
+          type: string
+        dismissed:
+          type: boolean
+        expires_at:
+          type: string
+        id:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+      required:
+      - created_at
+      - description
+      - dismissed
+      - id
+      - title
+      - type
+      type: object
+    handler.InstitutionResponse:
+      properties:
+        color:
+          type: string
+        display_name:
+          type: string
+        hidden:
+          type: boolean
+        icon:
+          type: string
+        institution_name:
+          type: string
+      required:
+      - color
+      - display_name
+      - hidden
+      - institution_name
+      type: object
+    handler.MonthlySummaryResponse:
+      properties:
+        expenses:
+          type: integer
+        income:
+          type: integer
+        saved:
+          type: integer
+        savings_rate:
+          type: number
+      required:
+      - expenses
+      - income
+      - saved
+      - savings_rate
+      type: object
+    handler.NetWorthHistoryEntry:
+      properties:
+        date:
+          type: string
+        total:
+          type: integer
+      required:
+      - date
+      - total
+      type: object
+    handler.NetWorthResponse:
+      properties:
+        current:
+          type: integer
+        history:
+          items:
+            $ref: '#/components/schemas/handler.NetWorthHistoryEntry'
+          type: array
+        previous_month:
+          type: integer
+      required:
+      - current
+      - history
+      - previous_month
+      type: object
+    handler.RecentTransactionResponse:
+      properties:
+        account_name:
+          type: string
+        amount:
+          type: integer
+        category_name:
+          type: string
+        date:
+          type: string
+        description:
+          type: string
+        hash:
+          type: string
+        reviewed:
+          type: boolean
+      required:
+      - account_name
+      - amount
+      - date
+      - description
+      - hash
+      - reviewed
+      type: object
+    handler.ReviewTransactionRequest:
+      properties:
+        category_override:
+          type: string
+        notes:
+          type: string
+        reviewed:
+          type: boolean
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    handler.SavingsGoalResponse:
+      properties:
+        archived:
+          type: boolean
+        color:
+          type: string
+        created_at:
+          type: string
+        current_amount:
+          type: integer
+        deadline:
+          type: string
+        icon:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        target_amount:
+          type: integer
+        updated_at:
+          type: string
+      required:
+      - archived
+      - color
+      - created_at
+      - current_amount
+      - icon
+      - id
+      - name
+      - target_amount
+      - updated_at
+      type: object
+    handler.SettingResponse:
+      properties:
+        configured:
+          type: boolean
+        description:
+          type: string
+        is_secret:
+          type: boolean
+        key:
+          type: string
+        updated_at:
+          type: string
+        value:
+          type: string
+      required:
+      - configured
+      - description
+      - is_secret
+      - key
+      - updated_at
+      - value
+      type: object
+    handler.SpendingByCategoryResponse:
+      properties:
+        category_color:
+          type: string
+        category_icon:
+          type: string
+        category_id:
+          type: string
+        category_name:
+          type: string
+        total_amount:
+          type: integer
+        transaction_count:
+          type: integer
+      required:
+      - category_color
+      - category_icon
+      - category_id
+      - category_name
+      - total_amount
+      - transaction_count
+      type: object
+    handler.SpendingPaceEntry:
+      properties:
+        cumulative_spending:
+          type: integer
+        day_of_month:
+          type: integer
+      required:
+      - cumulative_spending
+      - day_of_month
+      type: object
+    handler.SpendingPaceResponse:
+      properties:
+        actual_spending:
+          items:
+            $ref: '#/components/schemas/handler.SpendingPaceEntry'
+          type: array
+        budget:
+          type: integer
+        day_of_month:
+          type: integer
+        days_in_month:
+          type: integer
+      required:
+      - actual_spending
+      - budget
+      - day_of_month
+      - days_in_month
+      type: object
+    handler.StatusResponse:
+      properties:
+        status:
+          example: ok
+          type: string
+      required:
+      - status
+      type: object
+    handler.SyncStatusResponse:
+      properties:
+        last_sync_at:
+          type: string
+        transactions_processed:
+          type: integer
+        transactions_transformed:
+          type: integer
+      required:
+      - transactions_processed
+      - transactions_transformed
+      type: object
+    handler.TransactionListResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/handler.TransactionResponse'
+          type: array
+        total:
+          type: integer
+      required:
+      - data
+      - total
+      type: object
+    handler.TransactionResponse:
+      properties:
+        account_name:
+          type: string
+        amount:
+          type: integer
+        category_color:
+          type: string
+        category_confidence:
+          type: number
+        category_icon:
+          type: string
+        category_id:
+          type: string
+        category_name:
+          type: string
+        category_override:
+          type: string
+        created_at:
+          type: string
+        date:
+          type: string
+        description:
+          type: string
+        hash:
+          type: string
+        is_recurring:
+          type: boolean
+        is_transfer:
+          type: boolean
+        merchant_display_name:
+          type: string
+        merchant_icon:
+          type: string
+        merchant_name:
+          type: string
+        notes:
+          type: string
+        raw_hash:
+          type: string
+        reviewed:
+          type: boolean
+        tags:
+          items:
+            type: string
+          type: array
+      required:
+      - account_name
+      - amount
+      - created_at
+      - date
+      - description
+      - hash
+      - is_recurring
+      - is_transfer
+      - raw_hash
+      - reviewed
+      - tags
+      type: object
+    handler.UpdateGoalRequest:
+      properties:
+        archived:
+          type: boolean
+        color:
+          type: string
+        current_amount:
+          type: integer
+        deadline:
+          type: string
+        icon:
+          type: string
+        name:
+          type: string
+        target_amount:
+          type: integer
+      type: object
+    handler.UpdateInstitutionRequest:
+      properties:
+        color:
+          type: string
+        display_name:
+          type: string
+        hidden:
+          type: boolean
+        icon:
+          type: string
+      type: object
+    handler.UpdateSettingRequest:
+      properties:
+        value:
+          type: string
+      type: object
+    handler.UpsertBudgetRequest:
+      properties:
+        category_name:
+          type: string
+        color:
+          type: string
+        monthly_budget:
+          type: integer
+        rollover_enabled:
+          type: boolean
+      required:
+      - category_name
+      - monthly_budget
+      type: object
+info:
+  contact: {}
+  description: Personal finance API wrapping MoneyForward ME data
+  title: Kanjo API
+  version: 0.1.0
+openapi: 3.0.3
+paths:
+  /api/health:
+    get:
+      operationId: getHealth
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.HealthResponse'
+          description: OK
+      summary: Health check
+      tags:
+      - health
+  /api/v1/analytics/asset-composition:
+    get:
+      operationId: getAssetComposition
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.AssetCompositionResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: Get asset composition
+      tags:
+      - analytics
+  /api/v1/analytics/asset-trend:
+    get:
+      operationId: getAssetTrend
+      parameters:
+      - description: Start date (YYYY-MM-DD)
+        in: query
+        name: since
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.AssetTrendResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: Get asset trend
+      tags:
+      - analytics
+  /api/v1/analytics/cash-flow:
+    get:
+      operationId: getCashFlow
+      parameters:
+      - description: Start date (YYYY-MM-DD)
+        in: query
+        name: from
+        schema:
+          type: string
+      - description: End date (YYYY-MM-DD)
+        in: query
+        name: to
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.CashFlowResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: Get cash flow
+      tags:
+      - analytics
+  /api/v1/analytics/daily-rankings:
+    get:
+      operationId: getDailyRankings
+      parameters:
+      - description: Number of results
+        in: query
+        name: limit
+        schema:
+          default: 10
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.DailyRankingResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: Get daily rankings
+      tags:
+      - analytics
+  /api/v1/analytics/dashboard:
+    get:
+      operationId: getDashboard
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.DashboardResponse'
+          description: OK
+      summary: Get dashboard data
+      tags:
+      - analytics
+  /api/v1/analytics/monthly-summary:
+    get:
+      operationId: getMonthlySummary
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.MonthlySummaryResponse'
+          description: OK
+      summary: Get monthly summary
+      tags:
+      - analytics
+  /api/v1/analytics/net-worth:
+    get:
+      operationId: getNetWorth
+      parameters:
+      - description: Number of months of history
+        in: query
+        name: months
+        schema:
+          default: 12
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.NetWorthResponse'
+          description: OK
+      summary: Get net worth
+      tags:
+      - analytics
+  /api/v1/analytics/spending-by-category:
+    get:
+      operationId: getSpendingByCategory
+      parameters:
+      - description: Start date (YYYY-MM-DD)
+        in: query
+        name: from
+        schema:
+          type: string
+      - description: End date (YYYY-MM-DD)
+        in: query
+        name: to
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.SpendingByCategoryResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: Get spending by category
+      tags:
+      - analytics
+  /api/v1/analytics/spending-pace:
+    get:
+      operationId: getSpendingPace
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.SpendingPaceResponse'
+          description: OK
+      summary: Get spending pace
+      tags:
+      - analytics
+  /api/v1/budgets:
+    get:
+      operationId: listBudgets
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.BudgetWithProgressResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: List budgets
+      tags:
+      - budgets
+    put:
+      operationId: upsertBudget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.UpsertBudgetRequest'
+        description: Budget data
+        required: true
+        x-originalParamName: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+      summary: Create or update budget
+      tags:
+      - budgets
+  /api/v1/budgets/{category}:
+    delete:
+      operationId: deleteBudget
+      parameters:
+      - description: Category name
+        in: path
+        name: category
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete budget
+      tags:
+      - budgets
+  /api/v1/budgets/{category}/periods:
+    get:
+      operationId: getBudgetPeriods
+      parameters:
+      - description: Category name
+        in: path
+        name: category
+        required: true
+        schema:
+          type: string
+      - description: Number of periods
+        in: query
+        name: limit
+        schema:
+          default: 12
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.BudgetPeriodResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: Get budget periods
+      tags:
+      - budgets
+  /api/v1/chat:
+    post:
+      operationId: chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.ChatRequest'
+        description: Chat message
+        required: true
+        x-originalParamName: body
+      responses:
+        "200":
+          description: SSE stream
+      summary: Chat with AI assistant
+      tags:
+      - chat
+  /api/v1/chat/conversations:
+    get:
+      operationId: listConversations
+      parameters:
+      - description: Number of results
+        in: query
+        name: limit
+        schema:
+          default: 20
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.ConversationResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: List conversations
+      tags:
+      - chat
+  /api/v1/chat/conversations/{id}:
+    delete:
+      operationId: deleteConversation
+      parameters:
+      - description: Conversation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+      summary: Delete conversation
+      tags:
+      - chat
+    get:
+      operationId: getConversation
+      parameters:
+      - description: Conversation ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.ConversationDetailResponse'
+          description: OK
+      summary: Get conversation
+      tags:
+      - chat
+  /api/v1/goals:
+    get:
+      operationId: listGoals
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.SavingsGoalResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: List goals
+      tags:
+      - goals
+    post:
+      operationId: createGoal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.CreateGoalRequest'
+        description: Goal data
+        required: true
+        x-originalParamName: body
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.SavingsGoalResponse'
+          description: Created
+      summary: Create goal
+      tags:
+      - goals
+  /api/v1/goals/{id}:
+    delete:
+      operationId: deleteGoal
+      parameters:
+      - description: Goal ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: No Content
+      summary: Delete goal
+      tags:
+      - goals
+    put:
+      operationId: updateGoal
+      parameters:
+      - description: Goal ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.UpdateGoalRequest'
+        description: Goal data
+        required: true
+        x-originalParamName: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+      summary: Update goal
+      tags:
+      - goals
+  /api/v1/insights:
+    get:
+      operationId: listInsights
+      parameters:
+      - description: Number of results
+        in: query
+        name: limit
+        schema:
+          default: 10
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.InsightResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: List insights
+      tags:
+      - insights
+  /api/v1/insights/{id}/dismiss:
+    post:
+      operationId: dismissInsight
+      parameters:
+      - description: Insight ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+      summary: Dismiss insight
+      tags:
+      - insights
+  /api/v1/institutions:
+    get:
+      operationId: listInstitutions
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.InstitutionResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: List institutions
+      tags:
+      - institutions
+  /api/v1/institutions/{name}:
+    patch:
+      operationId: updateInstitution
+      parameters:
+      - description: Institution name
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.UpdateInstitutionRequest'
+        description: Institution data
+        required: true
+        x-originalParamName: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+      summary: Update institution
+      tags:
+      - institutions
+  /api/v1/settings:
+    get:
+      operationId: listSettings
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/handler.DataWrapper'
+                - properties:
+                    data:
+                      items:
+                        $ref: '#/components/schemas/handler.SettingResponse'
+                      type: array
+                  type: object
+          description: OK
+      summary: List app settings
+      tags:
+      - settings
+  /api/v1/settings/{key}:
+    put:
+      operationId: updateSetting
+      parameters:
+      - description: Setting key
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.UpdateSettingRequest'
+        description: Setting value
+        required: true
+        x-originalParamName: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.ErrorResponse'
+          description: Not Found
+      summary: Update a setting
+      tags:
+      - settings
+  /api/v1/sync/status:
+    get:
+      operationId: getSyncStatus
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.SyncStatusResponse'
+          description: OK
+      summary: Get sync status
+      tags:
+      - sync
+  /api/v1/transactions:
+    get:
+      operationId: listTransactions
+      parameters:
+      - description: Number of results
+        in: query
+        name: limit
+        schema:
+          default: 50
+          type: integer
+      - description: Offset for pagination
+        in: query
+        name: offset
+        schema:
+          default: 0
+          type: integer
+      - description: Search query
+        in: query
+        name: search
+        schema:
+          type: string
+      - description: Comma-separated category IDs
+        in: query
+        name: categories
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Start date (YYYY-MM-DD)
+        in: query
+        name: date_from
+        schema:
+          type: string
+      - description: End date (YYYY-MM-DD)
+        in: query
+        name: date_to
+        schema:
+          type: string
+      - description: Filter by reviewed status
+        in: query
+        name: reviewed
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.TransactionListResponse'
+          description: OK
+      summary: List transactions
+      tags:
+      - transactions
+  /api/v1/transactions/{hash}:
+    get:
+      operationId: getTransaction
+      parameters:
+      - description: Transaction hash
+        in: path
+        name: hash
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.TransactionResponse'
+          description: OK
+      summary: Get transaction
+      tags:
+      - transactions
+  /api/v1/transactions/{hash}/review:
+    patch:
+      operationId: reviewTransaction
+      parameters:
+      - description: Transaction hash
+        in: path
+        name: hash
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/handler.ReviewTransactionRequest'
+        description: Review data
+        required: true
+        x-originalParamName: body
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handler.StatusResponse'
+          description: OK
+      summary: Review transaction
+      tags:
+      - transactions
+servers:
+- url: http://localhost:8080/

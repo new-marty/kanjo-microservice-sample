@@ -1,0 +1,44 @@
+{
+  "workspaces": {
+    "apps/web": {
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignore": ["src/components/ui/**", "src/components/charts/**", "src/stores/**"],
+      "ignoreDependencies": [
+        "@tanstack/router-devtools",
+        "neverthrow",
+        "react-hook-form",
+        "valibot"
+      ]
+    },
+    "apps/mobile": {
+      "ignore": ["**/*"]
+    },
+    "packages/shared": {
+      "project": ["src/**/*.ts"],
+      "ignore": ["src/hooks/**", "src/utils/result.ts", "src/validators/**", "src/constants/**"],
+      "ignoreDependencies": ["neverthrow", "valibot"]
+    },
+    "packages/api-client": {
+      "project": ["src/**/*.ts"],
+      "ignore": ["src/custom-instance.ts", "src/generated/**"],
+      "ignoreDependencies": []
+    },
+    "packages/ui": {
+      "project": ["src/**/*.{ts,tsx}"]
+    },
+    "jobs/scraper": {
+      "project": ["src/**/*.ts"],
+      "ignore": ["src/mf/**", "src/db.ts", "src/errors.ts", "src/types.ts"],
+      "ignoreDependencies": ["pino-pretty"]
+    },
+    "jobs/shared": {
+      "ignore": ["src/**/*.ts"],
+      "ignoreDependencies": ["pino-pretty"]
+    },
+    "tooling/prettier": {
+      "ignoreDependencies": ["prettier-plugin-tailwindcss"]
+    }
+  },
+  "ignoreBinaries": ["turbo"],
+  "ignoreDependencies": ["@testing-library/jest-dom", "@testing-library/react", "turbo"]
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "@repo/tsconfig/react.json",
+  "include": ["app", "components", "hooks", "stores", "lib"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "noEmit": true
+  }
+}

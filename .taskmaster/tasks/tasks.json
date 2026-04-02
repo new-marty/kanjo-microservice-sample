@@ -1,0 +1,820 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 13,
+        "title": "Implement Core API Endpoints with Live Database Queries",
+        "description": "Replace mock data endpoints with real database queries using sqlc-generated code to serve live transaction, account, and category data",
+        "details": "Update Go API handlers to use sqlc-generated queries instead of returning mock data. Implement endpoints for: GET /transactions (with filtering, pagination), GET /accounts, GET /categories, GET /transaction/{id}. Use the existing kanjo schema tables and ensure proper error handling, response formatting, and HTTP status codes. Leverage the existing Gin router setup and maintain the OpenAPI spec compliance.",
+        "testStrategy": "Unit tests for each endpoint handler, integration tests with test database, verify response schemas match OpenAPI spec, test pagination and filtering parameters",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-13T01:20:54.350Z"
+      },
+      {
+        "id": 14,
+        "title": "Connect React Dashboard to Live API Data",
+        "description": "Replace mock data in React components with real API calls using TanStack Query and the generated TypeScript client",
+        "details": "Update React dashboard components to use the Orval-generated TypeScript client instead of mock data. Configure TanStack Query for data fetching, caching, and error handling. Update components: TransactionList, AccountSummary, CategoryBreakdown, and any other data-dependent components. Ensure proper loading states, error boundaries, and data refresh mechanisms.",
+        "testStrategy": "Component tests with MSW for API mocking, integration tests with real API, verify loading and error states, test data refresh and caching behavior",
+        "priority": "high",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Migrate Dashboard page to live API data",
+            "description": "Replace mock data imports in the Dashboard page with Orval-generated react-query hooks for dashboard metrics, monthly comparisons, and category breakdowns",
+            "dependencies": [],
+            "details": "Update apps/web/src/routes/index.tsx to replace mock imports with hooks like useGetDashboard(), useGetMonthlyComparison(), useGetCategoryBreakdown() from packages/api-client. Implement proper loading states with skeleton loaders, error boundaries for API failures, and data refresh mechanisms. Ensure all dashboard widgets display live data correctly.",
+            "status": "cancelled",
+            "testStrategy": "Component tests with MSW to mock API responses, verify loading states render correctly, test error boundary behavior, validate data refresh on mount and manual trigger",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:24.225Z"
+          },
+          {
+            "id": 2,
+            "title": "Migrate Transactions page to live API with filtering and pagination",
+            "description": "Replace mockTransactions and mockCategories with useListTransactions() and useListCategories() hooks, implementing server-side filtering and pagination via URL parameters",
+            "dependencies": [],
+            "details": "Update apps/web/src/routes/transactions.tsx to use useListTransactions() and useListCategories() from the API client. Wire server-side filtering and pagination using nuqs for URL parameter management. Implement loading states, error handling, and ensure filters (date range, category, amount) sync with URL params and trigger API refetch.",
+            "status": "cancelled",
+            "testStrategy": "Integration tests for filtering and pagination, verify URL params sync correctly with API calls, test loading and error states, validate transaction list updates on filter changes",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:24.226Z"
+          },
+          {
+            "id": 3,
+            "title": "Migrate Cash Flow page to live API with date range parameters",
+            "description": "Replace inline mock cash flow data with useGetCashFlow() hook and implement date range parameter handling for dynamic data fetching",
+            "dependencies": [],
+            "details": "Update apps/web/src/routes/cash-flow.tsx to replace inline mock data with useGetCashFlow() hook from packages/api-client. Add date range parameters to allow users to filter cash flow data by time period. Implement loading states, error boundaries, and ensure charts render correctly with live data.",
+            "status": "cancelled",
+            "testStrategy": "Component tests with MSW for API mocking, verify date range picker updates API query params, test chart rendering with live data, validate loading and error states",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:24.228Z"
+          },
+          {
+            "id": 4,
+            "title": "Migrate Assets page to live API for composition, trends, and rankings",
+            "description": "Replace inline mock asset data with useGetAssetComposition(), useGetAssetTrend(), and useGetDailyRankings() hooks for comprehensive asset tracking",
+            "dependencies": [],
+            "details": "Update apps/web/src/routes/assets.tsx to replace inline mocks with useGetAssetComposition(), useGetAssetTrend(), and useGetDailyRankings() from the API client. Ensure all asset visualizations (composition charts, trend graphs, ranking tables) display live data. Implement loading states, error handling, and data refresh mechanisms.",
+            "status": "cancelled",
+            "testStrategy": "Component tests with MSW for multiple API endpoints, verify all charts and tables render with live data, test loading states for concurrent API calls, validate error handling for partial failures",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:24.229Z"
+          },
+          {
+            "id": 5,
+            "title": "Migrate Goals page to live API with CRUD mutations",
+            "description": "Replace mockGoals with useListGoals() hook and implement create, update, delete, and archive mutations for full goals management",
+            "dependencies": [],
+            "details": "Update apps/web/src/routes/goals.tsx to replace mockGoals with useListGoals() from the API client. Add mutation hooks for create, update, delete, and archive operations. Implement optimistic updates, loading states during mutations, error handling with user feedback, and automatic refetch after successful mutations.",
+            "status": "cancelled",
+            "testStrategy": "Integration tests for all CRUD operations, verify optimistic updates work correctly, test error handling and rollback on mutation failures, validate cache invalidation after mutations",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:24.230Z"
+          },
+          {
+            "id": 6,
+            "title": "Migrate Settings page to live API with budget and institution management",
+            "description": "Replace mockBudgetCategories and mockInstitutions with useListBudgets() and useListInstitutions() hooks, adding mutation hooks for budget upsert and delete operations",
+            "dependencies": [],
+            "details": "Update apps/web/src/routes/settings.tsx to replace mockBudgetCategories and mockInstitutions with useListBudgets() and useListInstitutions() from packages/api-client. Add mutation hooks for budget upsert and delete operations. Implement loading states, error handling, form validation, and ensure settings update correctly with optimistic UI updates.",
+            "status": "cancelled",
+            "testStrategy": "Component tests with MSW for settings API endpoints, verify budget CRUD operations work correctly, test form validation and error states, validate optimistic updates and cache invalidation",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:24.231Z"
+          }
+        ],
+        "updatedAt": "2026-02-15T09:16:24.231Z"
+      },
+      {
+        "id": 15,
+        "title": "Implement Transaction Review and Correction Flow",
+        "description": "Build UI for reviewing and correcting AI-categorized transactions (API endpoint PATCH /transactions/:hash/review already exists)",
+        "details": "The API endpoint for transaction review already exists (PATCH /transactions/:hash/review). This task is purely UI work. Build transaction review interface with: review status indicators, inline category editing, transaction detail panel/modal, bulk selection with mark-as-reviewed, and undo/toast notifications. Wire all interactions to the existing review API endpoint.",
+        "testStrategy": "E2E tests for correction workflow, API tests for update endpoints, verify user corrections are persisted and applied to future categorization logic",
+        "priority": "high",
+        "dependencies": [
+          "14"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Add review status indicator to transaction table rows",
+            "description": "Show a reviewed badge/icon on transactions that have been reviewed using the is_reviewed field from the API response.",
+            "dependencies": [],
+            "details": "Add a visual indicator (badge or icon) to each transaction row in the table that displays when a transaction has been reviewed. Read the is_reviewed field from the API response and conditionally render the indicator. Style the badge to be subtle but visible, using appropriate colors and positioning within the table row.",
+            "status": "cancelled",
+            "testStrategy": "Unit tests for badge rendering based on is_reviewed field, visual regression tests for badge appearance, test both reviewed and unreviewed states",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.273Z"
+          },
+          {
+            "id": 2,
+            "title": "Build inline category editing in transaction table",
+            "description": "Add a dropdown/combobox to change a transaction's category directly in the table row using the PATCH /transactions/:hash/review endpoint.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement an inline category selector (dropdown or combobox) in each transaction table row. Fetch available categories from the API and populate the selector. On category change, call PATCH /transactions/:hash/review with the new category. Handle loading states during the API call and update the UI optimistically. Include error handling for failed updates.",
+            "status": "cancelled",
+            "testStrategy": "Unit tests for category dropdown component, integration tests for API calls to review endpoint, test error handling and loading states, verify optimistic updates",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.274Z"
+          },
+          {
+            "id": 3,
+            "title": "Build transaction detail panel/modal",
+            "description": "Create a detail view that opens when clicking a transaction row, with fields for notes, tags, category override, and review status, wired to the review API endpoint.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement a modal or side panel that opens when a transaction row is clicked. Include form fields for editing notes, tags, category, and marking as reviewed. Wire all fields to the PATCH /transactions/:hash/review endpoint. Include save and cancel buttons, form validation, and loading states. Ensure the modal closes after successful save and updates the transaction list.",
+            "status": "cancelled",
+            "testStrategy": "Component tests for modal/panel rendering, test form validation, integration tests for API calls, test modal open/close behavior, verify data persistence",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.275Z"
+          },
+          {
+            "id": 4,
+            "title": "Implement bulk selection with mark as reviewed action",
+            "description": "Add checkbox selection to transaction rows with a toolbar showing bulk actions (mark reviewed, change category) wired to the review endpoint.",
+            "dependencies": [
+              2
+            ],
+            "details": "Add checkboxes to each transaction row and a select-all checkbox in the table header. Implement a toolbar that appears when transactions are selected, showing bulk action buttons. Implement 'mark as reviewed' and 'change category' bulk actions that call PATCH /transactions/:hash/review for each selected transaction. Handle batch processing with loading indicators and error handling for partial failures.",
+            "status": "cancelled",
+            "testStrategy": "Unit tests for checkbox selection logic, test select-all functionality, integration tests for bulk API calls, test partial failure scenarios, verify UI updates after bulk operations",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.276Z"
+          },
+          {
+            "id": 5,
+            "title": "Add undo/toast notification for review actions",
+            "description": "Show a toast notification with an undo option after any review action (category change, mark reviewed, etc.) that reverts the change.",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Implement a toast notification system that appears after review actions (inline edits, detail panel saves, bulk operations). Include an undo button in the toast that reverts the change by calling the review API endpoint with the previous values. Store the previous state temporarily to enable undo. Auto-dismiss the toast after a timeout (e.g., 5 seconds) or when undo is clicked. Use TanStack Query to handle cache invalidation and optimistic updates.",
+            "status": "cancelled",
+            "testStrategy": "Unit tests for toast component, test undo functionality with various action types, test auto-dismiss behavior, integration tests for API calls during undo, verify state restoration",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.277Z"
+          }
+        ],
+        "updatedAt": "2026-02-15T09:16:25.277Z"
+      },
+      {
+        "id": 16,
+        "title": "Implement Budget Management API and Database Operations",
+        "description": "Create API endpoints for budget CRUD operations using the existing budget tables in the kanjo schema",
+        "details": "Implement budget management endpoints: GET /budgets, POST /budgets, PUT /budgets/{id}, DELETE /budgets/{id}, GET /budgets/{id}/progress. Use sqlc to generate queries for budget operations including budget period calculations, spending tracking, and progress monitoring. Support monthly/yearly budget periods and category-based budgets.",
+        "testStrategy": "API endpoint tests, budget calculation accuracy tests, test budget period logic, verify budget progress calculations with various transaction scenarios",
+        "priority": "medium",
+        "dependencies": [
+          "13"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-13T01:20:54.793Z"
+      },
+      {
+        "id": 17,
+        "title": "Build Budget Management UI Components",
+        "description": "Migrate existing budget management UI in Settings page from mock data to real API and add budget tracking visualization",
+        "details": "The Settings page already has budget category management UI built with mock data. The Budget API (Task 16) is fully implemented with List, Upsert, GetPeriods, and Delete endpoints. This task should: (1) Migrate the existing budget settings UI from mock data to real API using useListBudgets(), useUpsertBudget(), useDeleteBudget() hooks from the generated API client. (2) Add budget tracking/progress visualization that shows spending vs budget comparison, either on a dedicated /budgets page or integrated into the dashboard. Use the budget period endpoints for historical comparison.",
+        "testStrategy": "Component unit tests, visual regression tests, accessibility testing with screen readers, test responsive behavior across device sizes",
+        "priority": "medium",
+        "dependencies": [
+          "16"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T07:25:10.779Z"
+      },
+      {
+        "id": 18,
+        "title": "Implement Savings Goals API and Database Operations",
+        "description": "Create API endpoints for savings goals CRUD operations using the existing savings goal tables",
+        "details": "Implement savings goals endpoints: GET /savings-goals, POST /savings-goals, PUT /savings-goals/{id}, DELETE /savings-goals/{id}, GET /savings-goals/{id}/progress. Use sqlc for database operations including progress tracking, target date calculations, and contribution history. Support different goal types (amount-based, percentage-based) and automatic progress updates.",
+        "testStrategy": "API endpoint tests, savings goal progress calculation tests, test target date logic, verify contribution tracking accuracy",
+        "priority": "medium",
+        "dependencies": [
+          "13"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-13T01:20:55.122Z"
+      },
+      {
+        "id": 19,
+        "title": "Build Savings Goals UI Components",
+        "description": "Migrate existing goals page from mock data to real API and add CRUD mutation support",
+        "details": "The Goals page already has UI built with mock data (mockGoals). The Savings Goals API (Task 18) is fully implemented with CRUD + archive endpoints. This task should: (1) Migrate the existing goals page from mockGoals to real API using useListGoals() hook. (2) Add create/edit modal forms wired to useCreateGoal(), useUpdateGoal() mutations. (3) Add delete and archive functionality wired to useDeleteGoal(), useArchiveGoal() mutations. (4) Add progress update functionality.",
+        "testStrategy": "Component unit tests, chart rendering tests, test goal progress calculations in UI, verify contribution logging functionality",
+        "priority": "medium",
+        "dependencies": [
+          "18"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T07:54:12.824Z"
+      },
+      {
+        "id": 20,
+        "title": "Enhance Transform Pipeline with User Correction Learning",
+        "description": "Update Python transform job to incorporate user corrections into the categorization logic",
+        "details": "Modify the Python transform pipeline to: read user corrections from the database, update rule-based categorization with learned patterns, improve LLM prompts with correction examples, and store categorization confidence scores. Implement a feedback loop where user corrections become training data for future categorizations. Use the existing OpenRouter integration and maintain the rules-first, LLM-fallback approach.",
+        "testStrategy": "Unit tests for correction learning logic, integration tests with sample corrections, verify improved categorization accuracy over time, test confidence scoring",
+        "priority": "medium",
+        "dependencies": [
+          "15"
+        ],
+        "status": "deferred",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T08:00:38.140Z"
+      },
+      {
+        "id": 21,
+        "title": "Implement Data Refresh and Synchronization System",
+        "description": "Build system to handle data updates from the transform pipeline and notify the frontend of changes",
+        "details": "Implement data synchronization using PostgreSQL NOTIFY/LISTEN or polling mechanism. Update Go API to handle data refresh events and provide endpoints for checking data freshness: GET /sync/status, POST /sync/refresh. Update React app to automatically refresh data when changes are detected using TanStack Query invalidation. Include loading indicators and user notifications for sync status. NOTE: NOTIFY/LISTEN already exists in the DB. This should be deferred until basic data flow works end-to-end.",
+        "testStrategy": "Integration tests for sync mechanism, test data freshness detection, verify automatic UI updates, test sync status indicators",
+        "priority": "low",
+        "dependencies": [
+          "14"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T10:50:42.914Z"
+      },
+      {
+        "id": 22,
+        "title": "Implement AI Insights Generation System",
+        "description": "Create system to generate AI-powered financial insights and recommendations using transaction data",
+        "details": "Build AI insights system using OpenRouter integration: analyze spending patterns, identify trends, generate personalized recommendations. Create database tables for storing insights and implement API endpoints: GET /insights, GET /insights/spending-patterns, GET /insights/recommendations. Use the existing Python transform infrastructure and LLM integration to generate insights based on categorized transaction data.",
+        "testStrategy": "Unit tests for insight generation logic, test insight accuracy with sample data, verify API endpoints, test insight persistence and retrieval",
+        "priority": "low",
+        "dependencies": [
+          "14",
+          "20"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T12:07:53.737Z"
+      },
+      {
+        "id": 23,
+        "title": "Build AI Insights Dashboard Components",
+        "description": "Create React components to display AI-generated insights and recommendations in the dashboard",
+        "details": "Build insights dashboard with: InsightCard components for displaying recommendations, SpendingTrends charts, PersonalizedTips section, and InsightHistory. Use shadcn/ui components and chart libraries for data visualization. Include interactive elements for users to mark insights as helpful or dismiss them. Implement responsive design and ensure accessibility.",
+        "testStrategy": "Component unit tests, visual tests for charts and insights display, accessibility testing, test insight interaction features",
+        "priority": "low",
+        "dependencies": [
+          "22"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T12:07:53.740Z"
+      },
+      {
+        "id": 24,
+        "title": "Implement AI Chat Interface for Financial Queries",
+        "description": "Build chat interface allowing users to ask questions about their financial data using AI",
+        "details": "Create AI chat system with: chat UI component using shadcn/ui, backend API for processing natural language queries about financial data, integration with OpenRouter for LLM responses. Implement context-aware responses using user's transaction data, spending patterns, and budget information. Include chat history persistence and predefined query suggestions.",
+        "testStrategy": "E2E tests for chat functionality, test query processing accuracy, verify data privacy in LLM interactions, test chat history persistence and retrieval",
+        "priority": "low",
+        "dependencies": [
+          "22"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-15T09:16:23.326Z"
+      },
+      {
+        "id": 25,
+        "title": "Verify and Commit Existing API Implementation",
+        "description": "Test all existing API endpoints against a real database, fix any issues, and commit the uncommitted API code",
+        "details": "The API backend has been fully implemented in uncommitted code — handlers, services, repository layer, error handling, and DB layer are all wired up. This task verifies everything works: (1) Start the database and API with `task dev`. (2) Test all endpoints with curl: GET /health, GET /transactions, GET /analytics/*, GET /budgets, POST /budgets, DELETE /budgets/:id, GET /goals, POST /goals, PATCH /goals/:id, DELETE /goals/:id, GET /institutions, PATCH /transactions/:hash/review, GET /insights. (3) Fix any issues found during testing. (4) Run `task check` to ensure CI passes. (5) Commit all uncommitted API code (handlers, services, repository, apperror, db packages).",
+        "testStrategy": "Manual testing of all API endpoints against real database, run task check for automated CI validation",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-13T04:06:57.486Z"
+      },
+      {
+        "id": 26,
+        "title": "Set Up API Integration Testing",
+        "description": "Set up test database configuration and write integration tests for Go API endpoints",
+        "details": "Set up the testing infrastructure for the Go API: (1) Configure test database connection (separate test DB or test schema). (2) Write integration tests for transaction endpoints (list, get, update/review). (3) Write integration tests for analytics endpoints (dashboard, cash flow, category breakdown, monthly comparison). (4) Write integration tests for budget endpoints (list, upsert, delete, periods). (5) Write integration tests for goal endpoints (CRUD + archive). (6) Ensure tests run in CI via `task test`.",
+        "testStrategy": "The tests themselves are the deliverable — verify they pass in CI and catch regressions",
+        "priority": "medium",
+        "dependencies": [
+          "25"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-14T07:59:16.647Z"
+      },
+      {
+        "id": 27,
+        "title": "Add Internationalization (i18n) Support to React Web App",
+        "description": "Implement react-i18next for multi-language support in the web app with Japanese (default) and English translations, including language detection, translation files, and a language switcher component.",
+        "details": "Implement comprehensive i18n support for the React web application (apps/web/) using react-i18next:\n\n1. **Install Dependencies**: Add react-i18next, i18next, and i18next-browser-languagedetector to the web app package.json.\n\n2. **Create i18n Configuration** (src/i18n/config.ts):\n   - Initialize i18next with language detection plugin\n   - Set Japanese (ja) as default/fallback language\n   - Configure supported languages: ['ja', 'en']\n   - Enable debug mode for development\n   - Set up interpolation and resource loading\n\n3. **Create Translation Files** (src/locales/):\n   - Create directory structure: locales/ja/translation.json and locales/en/translation.json\n   - Organize translations by feature/domain: common, dashboard, transactions, budgets, goals, settings, auth, errors\n   - Use nested JSON structure for better organization (e.g., \"dashboard.title\", \"transactions.list.empty\")\n\n4. **Extract Hardcoded Strings**:\n   - Audit all route pages (dashboard, transactions, budgets, goals, settings, etc.)\n   - Extract user-facing strings from components into translation keys\n   - Replace hardcoded text with useTranslation hook: const { t } = useTranslation(); then use t('key')\n   - Handle pluralization, interpolation, and date/number formatting\n   - Update shared/ui components (Button labels, form validation messages, etc.)\n\n5. **Wrap App with I18nextProvider** (main.tsx):\n   - Import i18n configuration\n   - Wrap the root component with I18nextProvider or use i18n.use() initialization\n   - Ensure i18n is initialized before React renders\n\n6. **Build Language Switcher Component** (components/LanguageSwitcher.tsx):\n   - Create dropdown/toggle component using shadcn/ui Select or DropdownMenu\n   - Display current language with flag icons or language codes\n   - Persist language preference to localStorage\n   - Add to settings page or app header/navigation\n   - Show language names in their native form (日本語, English)\n\n7. **Handle Dynamic Content**:\n   - Ensure API error messages are translatable\n   - Format dates using i18n date formatting (consider date-fns with locale support)\n   - Format currency values appropriately for each locale\n   - Test RTL considerations (though not needed for ja/en)\n\n8. **Update Existing Components**:\n   - TransactionList: column headers, empty states, action buttons\n   - Dashboard: section titles, chart labels, summary cards\n   - Budget/Goals pages: form labels, validation messages, status text\n   - Settings page: section headers, descriptions, button labels\n   - Authentication pages: login/signup form labels and messages",
+        "testStrategy": "1. **Unit Tests**: Test i18n configuration initialization, language switching logic, and translation key resolution with missing keys.\n\n2. **Component Tests**: Verify all components render correctly in both Japanese and English, test useTranslation hook usage, and ensure no hardcoded strings remain.\n\n3. **Integration Tests**: Test language switcher component functionality, verify language preference persistence in localStorage, and test language detection on initial load.\n\n4. **Visual Regression Tests**: Take screenshots of key pages in both languages to ensure layout doesn't break with different text lengths (Japanese characters vs English).\n\n5. **Manual Testing Checklist**:\n   - Navigate through all pages in Japanese (default)\n   - Switch to English and verify all text updates\n   - Refresh page and confirm language preference persists\n   - Test with browser language set to ja/en\n   - Verify date and number formatting for each locale\n   - Check form validation messages in both languages\n   - Test error states and toast notifications in both languages\n\n6. **Coverage Verification**: Run a script or manual audit to ensure no user-facing strings are hardcoded (grep for common patterns in JSX).\n\n7. **Accessibility**: Verify lang attribute updates on html element when language changes, test with screen readers in both languages.",
+        "status": "done",
+        "dependencies": [
+          "14"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install i18n dependencies and create configuration",
+            "description": "Install react-i18next, i18next, and i18next-browser-languagedetector packages, then create the i18n configuration file with language detection and Japanese as default.",
+            "dependencies": [],
+            "details": "Run 'pnpm add react-i18next i18next i18next-browser-languagedetector' in apps/web/. Create src/lib/i18n.ts with i18next initialization: configure language detector plugin, set Japanese (ja) as default and fallback language, configure supported languages ['ja', 'en'], enable debug mode for development environment, set up interpolation options, and configure resource loading. Import and initialize i18n in main.tsx before React renders the app.",
+            "status": "cancelled",
+            "testStrategy": "Unit test i18n configuration initialization, verify language detection works correctly, test fallback to Japanese when unsupported language is detected, ensure debug mode is only enabled in development",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.820Z"
+          },
+          {
+            "id": 2,
+            "title": "Create translation file structure and initial translations",
+            "description": "Set up the translation file directory structure and create comprehensive Japanese and English translation files organized by feature domains.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create directory structure: src/locales/ja/translation.json and src/locales/en/translation.json. Organize translations by feature domains: common (buttons, labels, actions), dashboard (titles, summaries, charts), transactions (list, forms, filters), budgets (creation, progress, alerts), goals (targets, progress, milestones), settings (preferences, profile, notifications), auth (login, signup, validation), and errors (API errors, validation messages). Use nested JSON structure for better organization (e.g., 'dashboard.title', 'transactions.list.empty'). Include pluralization rules and interpolation placeholders where needed.",
+            "status": "cancelled",
+            "testStrategy": "Verify all translation keys are present in both language files, test nested key resolution, validate JSON syntax, ensure no missing translations between ja and en files",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.821Z"
+          },
+          {
+            "id": 3,
+            "title": "Extract and replace hardcoded strings in route pages",
+            "description": "Audit all route pages and extract hardcoded user-facing strings, replacing them with translation keys using the useTranslation hook.",
+            "dependencies": [
+              2
+            ],
+            "details": "Audit and update all 6 route pages in src/routes/: dashboard, transactions, cash-flow, assets, goals, and settings. Import useTranslation hook from react-i18next: 'const { t } = useTranslation()'. Replace all hardcoded strings with t('key') calls. Handle special cases: pluralization using t('key', { count }), interpolation for dynamic values t('key', { value }), and date/number formatting using i18n formatting options. Update page titles, section headers, button labels, form labels, validation messages, empty states, and error messages. Ensure all user-facing text is translatable.",
+            "status": "cancelled",
+            "testStrategy": "Component tests to verify all pages render correctly in both Japanese and English, test language switching on each page, verify no hardcoded strings remain using regex search, test pluralization and interpolation edge cases",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.822Z"
+          },
+          {
+            "id": 4,
+            "title": "Update shared components with translation support",
+            "description": "Extract hardcoded strings from shared UI components and layout components, ensuring all reusable components support internationalization.",
+            "dependencies": [
+              2
+            ],
+            "details": "Update components in src/components/: layout components (header, sidebar, navigation), dashboard components (summary cards, widgets), chart components (labels, tooltips, legends), transaction components (TransactionList, filters, forms), and chat components. Replace hardcoded text with useTranslation hook. For shadcn/ui components, ensure button labels, form validation messages, dialog titles, toast notifications, and dropdown options are translatable. Handle dynamic content like API error messages by creating error key mappings. Format currency values and dates appropriately for each locale using i18n formatting or date-fns with locale support.",
+            "status": "cancelled",
+            "testStrategy": "Component unit tests for each updated component in both languages, test form validation messages in both languages, verify error message translations, test currency and date formatting for ja and en locales",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.823Z"
+          },
+          {
+            "id": 5,
+            "title": "Build language switcher component and integrate into UI",
+            "description": "Create a language switcher component using shadcn/ui that allows users to toggle between Japanese and English, with language preference persistence.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Create src/components/LanguageSwitcher.tsx using shadcn/ui Select or DropdownMenu component. Display current language with native names (日本語, English) and optional flag icons. Implement language switching using i18n.changeLanguage() method. Persist language preference to localStorage and sync with i18next language detector. Add the language switcher to the app header (src/components/layout/) or settings page. Include smooth transition when switching languages. Ensure the switcher itself is translated and shows the current language state clearly. Test that language preference persists across page reloads and browser sessions.",
+            "status": "cancelled",
+            "testStrategy": "Component test for LanguageSwitcher rendering and interaction, test language switching functionality, verify localStorage persistence, test language preference restoration on app reload, integration test to ensure entire app updates when language is switched",
+            "parentId": "undefined",
+            "updatedAt": "2026-02-15T09:16:25.825Z"
+          }
+        ],
+        "updatedAt": "2026-02-15T09:16:25.825Z"
+      },
+      {
+        "id": 28,
+        "title": "Add Transform Pipeline Tests",
+        "description": "Write pytest tests for the Python transform pipeline (jobs/transform/). Cover: category pipeline (rule-based + LLM fallback), merchant pipeline, transfer detection, insight generation, and the orchestrator. Mock all LLM/OpenRouter calls. Use pytest with uv. Target: every pipeline stage has at least basic happy-path and error-path tests.",
+        "details": "Create a test suite under jobs/transform/tests/ using pytest. Test each pipeline stage:\n\n1. **Category pipeline**: Test rule-based categorization returns correct categories for known patterns, test LLM fallback is called when rules don't match, test confidence scores are set correctly. Mock OpenRouter API calls.\n\n2. **Merchant pipeline**: Test merchant name normalization, test merchant matching against known merchants, test new merchant creation.\n\n3. **Transfer detection**: Test identification of transfer transactions between accounts, test that transfers are excluded from spending calculations.\n\n4. **Insight generation**: Test that insights are generated from transaction data, test insight types (spending patterns, anomalies, trends). Mock LLM calls.\n\n5. **Orchestrator**: Test the full pipeline orchestration, test error handling when individual stages fail, test transaction deduplication.\n\nUse pytest fixtures for common test data. Use unittest.mock or pytest-mock for mocking external services.",
+        "testStrategy": "Run with 'cd jobs/transform && uv run pytest'. Verify all tests pass in CI via task test.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create conftest.py with shared fixtures and test helpers",
+            "description": "Create jobs/transform/tests/conftest.py with pytest fixtures for all pipeline tests. Add pytest-mock to dev dependencies.",
+            "dependencies": [],
+            "details": "Create fixtures: (1) sample_categories — list of Category models covering income-salary, expense-food, expense-groceries, expense-restaurant, expense-cafe, expense-rent, expense-entertainment, expense-subscription, expense-uncategorized, transfer. (2) sample_raw_transaction — factory fixture returning RawTransaction with configurable fields (defaults: hash='abc123', date=date(2024,1,15), description='スターバックス 渋谷店', amount=-680, category='食費', sub_category='カフェ', account_name='三菱UFJ普通'). (3) mock_pool — MagicMock for ConnectionPool. (4) mock_llm — MagicMock for LLMProvider with pre-configured return values for categorize() and normalize_merchant(). (5) sample_transformed_transactions — factory for TransformedTransaction lists. Add pytest-mock>=3.12 to dev dependencies in pyproject.toml.",
+            "status": "pending",
+            "testStrategy": "Verify fixtures load by running `uv run pytest tests/conftest.py --collect-only` to confirm discovery."
+          },
+          {
+            "id": 2,
+            "title": "Add category resolution tests",
+            "description": "Create jobs/transform/tests/test_categories.py testing resolve_category() and the rules in rules/categories.py.",
+            "dependencies": [
+              1
+            ],
+            "details": "Test resolve_category(): (1) High-confidence rule match (mf_category='水道・光熱費') returns correct category with confidence>=85, llm_called=False. (2) Low-confidence rule match triggers LLM — mock llm.categorize() to return valid category, assert llm_called=True. (3) LLM returns invalid category_id — falls back to rule/uncategorized. (4) LLM raises exception — falls back gracefully. (5) No LLM and no rule match — returns uncategorized with confidence=50. Test map_mf_category_to_kanjo(): (6) Income with salary subcategory returns income-salary at 95. (7) Food/外食 returns expense-restaurant at 90. (8) Housing/家賃 returns expense-rent at 95. (9) Entertainment/サブスク returns expense-subscription at 90. (10) Unknown returns None.",
+            "status": "pending",
+            "testStrategy": "Run `uv run pytest tests/test_categories.py -v`. All 10 cases pass. No real LLM/DB calls."
+          },
+          {
+            "id": 3,
+            "title": "Add merchant resolution tests",
+            "description": "Create jobs/transform/tests/test_merchants.py testing resolve_merchant() and match_merchant_by_rules().",
+            "dependencies": [
+              1
+            ],
+            "details": "Test match_merchant_by_rules(): (1) 'アマゾン 注文確認' matches Amazon. (2) 'セブンイレブン 渋谷店' matches Seven-Eleven. (3) 'STARBUCKS SHIBUYA' matches Starbucks. (4) 'Unknown shop XYZ' returns None. Test resolve_merchant(): (5) Existing merchant in DB cache — mock get_merchant_by_description(), assert llm_called=False, is_new=False. (6) No cache, rule matches — mock create_merchant(). (7) No cache, no rule, LLM available — mock normalize_merchant(), assert llm_called=True, is_new=True. (8) No cache, no rule, LLM fails — falls back to raw description. (9) No cache, no rule, no LLM — creates merchant with raw description.",
+            "status": "pending",
+            "testStrategy": "Run `uv run pytest tests/test_merchants.py -v`. All 9 cases pass. DB functions mocked."
+          },
+          {
+            "id": 4,
+            "title": "Add transfer pair matching tests",
+            "description": "Create jobs/transform/tests/test_transfers.py testing match_transfer_pairs() and detect_potential_transfers().",
+            "dependencies": [
+              1
+            ],
+            "details": "Test match_transfer_pairs(): (1) Two same-date opposite-amount transfers — returns 1 matched pair. (2) Fewer than 2 transfers — returns 0. (3) Same-date different absolute amounts — no match. (4) Multiple pairs on same date — matches correct pairs. (5) Transfers on different dates — no cross-date matching. Test detect_potential_transfers(): (6) is_transfer=True included. (7) Description containing '振込' detected. (8) 'transfer' (case-insensitive) detected. (9) Regular transaction excluded.",
+            "status": "pending",
+            "testStrategy": "Run `uv run pytest tests/test_transfers.py -v`. All 9 cases pass."
+          },
+          {
+            "id": 5,
+            "title": "Add insights generator and orchestrator tests",
+            "description": "Create jobs/transform/tests/test_insights.py and test_orchestrator.py.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "test_insights.py: (1) No LLM — only 5 rule generators run. (2) With LLM — all 8 generators run. (3) Failing generator doesn't block others. test_orchestrator.py: (4) Empty transaction list — early return with 0 processed. (5) Single transaction — mock all DB/pipeline functions, verify TransformStats. (6) Backfill calls get_all_raw_transactions. (7) No API key — rules-only mode. (8) max_llm_calls_per_run respected.",
+            "status": "pending",
+            "testStrategy": "Run `uv run pytest tests/test_insights.py tests/test_orchestrator.py -v`. All cases pass. Full suite: `uv run pytest tests/ -v`."
+          }
+        ],
+        "updatedAt": "2026-02-15T00:00:00.000Z"
+      },
+      {
+        "id": 29,
+        "title": "Add Shared Package Tests",
+        "description": "Write vitest tests for packages/shared/. Cover: formatYen/formatYenSigned/formatYenCompact utilities, date helpers, valibot validators, and exported constants. These utilities are used across web and mobile apps so correctness is critical.",
+        "details": "Create test files under packages/shared/src/ (colocated) or packages/shared/tests/. Use vitest.\n\n1. **Currency formatters**: Test formatYen, formatYenSigned, formatYenCompact with positive/negative/zero values, large numbers, and edge cases.\n\n2. **Date helpers**: Test any date utility functions for correct formatting, timezone handling, and edge cases.\n\n3. **Valibot validators**: Test validation schemas accept valid input and reject invalid input with appropriate error messages.\n\n4. **Constants**: Test that exported constants (categories, currencies) have expected values and structure.\n\nEnsure tests are added to the vitest config so they run as part of 'task test'.",
+        "testStrategy": "Run with 'pnpm --filter @repo/shared test'. Verify tests pass in CI via task test.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Write tests for currency utilities and date helpers",
+            "description": "Create comprehensive vitest tests for currency formatting functions (formatYen, formatYenSigned, formatYenCompact, formatCurrency, parseCurrency) and date utility functions (formatDateRange, groupByMonth) in packages/shared/src/utils/",
+            "dependencies": [],
+            "details": "Create packages/shared/src/utils/currency.test.ts covering: formatYen with positive/negative/zero values and large numbers (e.g., 1234567, -5000, 0, 999999999); formatYenSigned with positive (expect '+¥'), negative (expect '-¥'), and zero values; formatYenCompact with values above/below 10000 threshold (e.g., 9999, 19000, 1234567); formatCurrency with different currency codes (JPY, USD, EUR) and invalid codes; parseCurrency with various input formats. Create packages/shared/src/utils/date.test.ts covering: formatDateRange with various date ranges; groupByMonth with single month, multi-month, and edge cases (month boundaries). Use vitest's describe/it/expect pattern. All test files should be colocated with source files (.test.ts suffix).",
+            "status": "pending",
+            "testStrategy": "Run 'pnpm --filter @repo/shared test' to execute vitest. Verify all currency and date utility functions are tested with edge cases (zero, negative, large numbers, boundary values). Check test coverage includes positive and negative test cases."
+          },
+          {
+            "id": 2,
+            "title": "Write tests for validators and constants",
+            "description": "Create comprehensive vitest tests for Valibot transaction validators (TransactionSchema, TransactionListSchema) and constant exports (DEFAULT_CATEGORIES, CATEGORY_EMOJIS, CATEGORY_COLORS, CURRENCIES, getCategoryEmoji, getCategoryColor)",
+            "dependencies": [
+              1
+            ],
+            "details": "Create packages/shared/src/validators/transaction.test.ts covering: TransactionSchema validation with valid transaction objects (all required fields), invalid objects (missing required fields, wrong types), optional fields (category_id, category_name, account_name, memo); TransactionListSchema with valid and invalid arrays; verify error messages are appropriate. Create packages/shared/src/constants/categories.test.ts covering: DEFAULT_CATEGORIES array structure and values; getCategoryEmoji returns correct emoji for known categories and fallback '📦' for unknown; getCategoryColor returns correct hex color for CategoryName types and fallback '#6B7280' for unknown; CATEGORY_COLORS has all CategoryName keys. Create packages/shared/src/constants/currencies.test.ts covering: CURRENCIES object structure (JPY, USD, EUR with correct locale/decimals); DEFAULT_CURRENCY is 'JPY'. Use valibot's safeParse for validation testing.",
+            "status": "pending",
+            "testStrategy": "Run 'pnpm --filter @repo/shared test' to execute all tests. Verify validators correctly accept valid input and reject invalid input with appropriate valibot error messages. Verify constants have expected values and utility functions handle edge cases (unknown categories/currencies). Ensure all tests pass in local environment and CI via 'task test'."
+          }
+        ],
+        "updatedAt": "2026-02-15T00:00:00.000Z"
+      },
+      {
+        "id": 30,
+        "title": "Add API Service Layer Tests",
+        "description": "Write Go unit tests for apps/api/internal/service/ layer. Cover: analytics calculations (dashboard aggregations, monthly comparisons), budget period logic, goal progress calculations. Test service functions in isolation by mocking the repository layer. These complement the existing handler integration tests (Task 26).",
+        "details": "Create test files in apps/api/internal/service/ (*_test.go). Use Go standard testing + testify.\n\n1. **Analytics service**: Test dashboard metric calculations, monthly comparison logic, category breakdown aggregation, cash flow calculations.\n\n2. **Budget service**: Test budget period calculations, spending vs budget comparisons, budget progress percentages.\n\n3. **Goal service**: Test goal progress calculations, target date projections, archive logic.\n\n4. **Transaction service**: Test filtering logic, review status updates, pagination calculations.\n\nMock the repository layer using interfaces. Use table-driven tests for comprehensive input coverage. These are unit tests that don't require a database connection.",
+        "testStrategy": "Run with 'cd apps/api && go test ./internal/service/...'. Verify tests pass in CI via task test.",
+        "priority": "medium",
+        "dependencies": [
+          "26"
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Add AnalyticsService tests",
+            "description": "Create analytics_test.go testing GetDashboard, GetNetWorth, GetMonthlySummary, GetSpendingPace, GetSpendingByCategory, GetCashFlow, GetAssetComposition, GetAssetTrend, GetDailyRankings.",
+            "dependencies": [],
+            "details": "Follow existing pattern from service_test.go TestMain. Tests: (1) GetDashboard_WithData — seed all, verify non-zero values. (2) GetDashboard_EmptyDB — clean tables, verify zero values without error. (3) GetNetWorth_DefaultMonths — verify defaults to 12. (4) GetMonthlySummary — verify income/expenses/saved/savingsRate. (5) GetSpendingPace — verify DaysInMonth > 0, Budget >= 0. (6) GetSpendingByCategory — verify at least one category. (7) GetCashFlow — verify non-empty with date range. (8) GetAssetComposition — verify rows. (9) GetAssetTrend — verify with since=30 days. (10) GetDailyRankings_DefaultLimit — defaults to 10. Use testutil.CleanTables + seed before each.",
+            "status": "pending",
+            "testStrategy": "Run `go test ./internal/service/ -run TestGet -v -race` from apps/api/."
+          },
+          {
+            "id": 2,
+            "title": "Add TransactionService tests",
+            "description": "Create transaction_test.go testing List (with all filter combos), GetByHash, GetRecent, UpdateMetadata.",
+            "dependencies": [],
+            "details": "Tests: (1) List_NoFilters — verify Data and Total. (2) List_WithSearch — filter 'スターバックス'. (3) List_WithCategoryFilter. (4) List_WithDateRange. (5) List_WithReviewedFilter. (6) List_Pagination — offset past all records. (7) GetByHash_Found. (8) GetByHash_NotFound — verify apperror.IsNotFound. (9) GetRecent — limit=3. (10) UpdateMetadata_SetReviewed. (11) UpdateMetadata_SetTags. (12) UpdateMetadata_NotFound. (13) UpdateMetadata_PartialUpdate — only Notes, other fields unchanged.",
+            "status": "pending",
+            "testStrategy": "Run `go test ./internal/service/ -run TestTransaction -v`."
+          },
+          {
+            "id": 3,
+            "title": "Add Insight, Institution, and Sync service tests",
+            "description": "Create insight_test.go, institution_test.go, sync_test.go.",
+            "dependencies": [],
+            "details": "InsightService: (1) List_Active — seed 2 active + 1 dismissed, verify returns 2. (2) List_DefaultLimit — defaults to 10. (3) Dismiss_Found. (4) Dismiss_NotFound. (5) Get_Found. (6) Get_NotFound. InstitutionService: (7) List. (8) Get_Found. (9) Get_NotFound. (10) Update. (11) Update_NotFound. SyncService: (12) GetStatus_NoRuns — empty status without error.",
+            "status": "pending",
+            "testStrategy": "Run `go test ./internal/service/ -run 'TestInsight|TestInstitution|TestSync' -v`."
+          },
+          {
+            "id": 4,
+            "title": "Add SettingsService tests",
+            "description": "Create settings_test.go testing List (masking), GetPlaintext, Update, SeedFromEnv.",
+            "dependencies": [],
+            "details": "Add SeedSettings helper to testutil. Tests: (1) List — verify secrets masked (****xxxx). (2) List_EmptySecret — Configured=false. (3) GetPlaintext — full unmasked value. (4) GetPlaintext_NotFound. (5) Update — change value, re-get. (6) Update_NotFound. (7) SeedFromEnv — t.Setenv() sets env vars, verify values populated. (8) SeedFromEnv_NoOverwrite — existing values preserved.",
+            "status": "pending",
+            "testStrategy": "Run `go test ./internal/service/ -run TestSettings -v`. Verify env var isolation with t.Setenv."
+          }
+        ],
+        "updatedAt": "2026-02-15T00:00:00.000Z"
+      },
+      {
+        "id": 31,
+        "title": "Visual Review — Dashboard (/)",
+        "description": "Visually verify the Dashboard page after the UI/UX overhaul. Check all widgets render correctly at desktop (1280x800) and mobile (390x844) viewports. Fix any visual issues found.",
+        "details": "Use Playwright MCP to navigate to http://localhost:5173/ and verify:\n\n1. **NetWorthHero**: gradient text, animated counter, tinted card, area sparkline\n2. **MonthlySummary**: unified triptych layout, dividers between sections, tinted backgrounds for income/expense/savings\n3. **SpendingPace**: area chart with gradient fill, 'Today' marker line\n4. **CategoryBudgets**: emoji icons for categories, proper empty state when no budgets exist\n5. **AIInsights**: purple-tinted card, proper empty state when no insights\n6. **RecentTransactions**: emoji icons, colored category tags, review indicator dots\n\nSave screenshots to .screenshots/dashboard-desktop.png and .screenshots/dashboard-mobile.png. Fix any spacing, alignment, missing components, or broken layouts found.",
+        "testStrategy": "task check passes + visual screenshots at both desktop (1280x800) and mobile (390x844) viewports show correct rendering",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2026-02-15T10:56:56.659Z"
+      },
+      {
+        "id": 32,
+        "title": "Visual Review — Assets (/assets)",
+        "description": "Visually verify the Assets page after the UI/UX overhaul. Check all components render correctly at desktop and mobile viewports. Fix any visual issues found.",
+        "details": "Use Playwright MCP to navigate to http://localhost:5173/assets and verify:\n\n1. **AssetHero**: animated counter, gradient text, tinted card, change badge showing gain/loss\n2. **Asset Composition**: stacked horizontal bar chart with legend\n3. **Daily Rankings**: gainers/decliners split view\n4. **Asset Trend**: line chart with TimeRangeToggle component\n5. **Empty states**: EmptyState component used when no data available\n\nSave screenshots to .screenshots/assets-desktop.png and .screenshots/assets-mobile.png. Fix any visual issues.",
+        "testStrategy": "task check passes + visual screenshots at both viewports show correct rendering",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Desktop visual review of /assets (1280x800)",
+            "description": "Navigate to /assets at 1280x800, take snapshot and screenshots, verify AssetHero, composition bar, gainers/decliners, trend chart against information hierarchy.",
+            "dependencies": [],
+            "details": "Start dev server. Navigate to /assets. Resize to 1280x800. Take browser_snapshot — verify: AssetHero with total assets (text-4xl font-bold font-mono), change badge, gradient text. Composition stacked bar + legend. Gainers/Decliners in 2-col grid. Trend chart with TimeRangeToggle. Take screenshot to .screenshots/assets-desktop.png. Take fullPage screenshot. Verify hierarchy: primary=total assets number + badge is largest, secondary=composition + trend, tertiary=breakdown + gainers/decliners.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved to .screenshots/assets-desktop.png. All components present, hierarchy correct."
+          },
+          {
+            "id": 2,
+            "title": "Mobile visual review of /assets (390x844)",
+            "description": "Resize to 390x844, verify responsive layout — no overflow, gainers/decliners stack, chart fills width.",
+            "dependencies": [
+              1
+            ],
+            "details": "Resize to 390x844. Take snapshot — verify: hero stacks vertically, composition bar full width, Gainers/Decliners stack to single column, chart full width, TimeRangeToggle doesn't overflow. Take screenshot to .screenshots/assets-mobile.png + fullPage. Check: no horizontal scroll, text readable, chart labels don't overlap, financial numbers don't overflow.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved. No horizontal overflow, all elements visible."
+          },
+          {
+            "id": 3,
+            "title": "Fix visual issues found in /assets reviews",
+            "description": "Address all issues from desktop and mobile reviews. Re-verify after fixes.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Fix any: overflow/truncation, missing card-tint, numbers not font-mono, incorrect spacing, EmptyState missing, chart not filling width, gainers/decliners not stacking on mobile. Re-screenshot both viewports. Run `task check`. If no issues, mark done with note.",
+            "status": "pending",
+            "testStrategy": "Re-take screenshots at both viewports. `task check` passes."
+          }
+        ],
+        "updatedAt": "2026-02-15T12:00:00.000Z"
+      },
+      {
+        "id": 33,
+        "title": "Visual Review — Cash Flow (/cash-flow)",
+        "description": "Visually verify the Cash Flow page after the UI/UX overhaul. Check summary cards, charts, and layouts at both viewports. Fix any visual issues found.",
+        "details": "Use Playwright MCP to navigate to http://localhost:5173/cash-flow and verify:\n\n1. **Summary cards**: icons with tinted backgrounds (income green, expense red, net savings cyan)\n2. **ComposedChart**: bar + line chart with custom ChartTooltip, TimeRangeToggle for period selection\n3. **Net savings coloring**: green for positive, red for negative\n4. **Mobile layout**: summary cards grid stacks properly on mobile\n\nSave screenshots to .screenshots/cash-flow-desktop.png and .screenshots/cash-flow-mobile.png. Fix any visual issues.",
+        "testStrategy": "task check passes + visual screenshots at both viewports show correct rendering",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Desktop visual review of /cash-flow (1280x800)",
+            "description": "Verify 4-column summary cards, composed chart, colors, and hierarchy at desktop.",
+            "dependencies": [],
+            "details": "Navigate to /cash-flow at 1280x800. Take snapshot — verify: 4 summary cards in md:grid-cols-4 (income/expenses/net/rate), ComposedChart with bars (green income, red expenses) + net line, TimeRangeToggle, ChartTooltip. Screenshot to .screenshots/cash-flow-desktop.png + fullPage. Check: amounts use font-mono, semantic colors on cards, chart colors correct, hierarchy=chart primary, cards secondary.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved. 4-column grid, chart renders, correct colors."
+          },
+          {
+            "id": 2,
+            "title": "Mobile visual review of /cash-flow (390x844)",
+            "description": "Verify cards switch to 2x2 grid, chart fills width, no overflow.",
+            "dependencies": [
+              1
+            ],
+            "details": "Resize to 390x844. Take snapshot — verify: summary cards switch to grid-cols-2 (2x2), chart fills full width, TimeRangeToggle doesn't overflow. Screenshot to .screenshots/cash-flow-mobile.png + fullPage. Check: amounts not truncated, chart labels readable, legend wraps.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved. 2x2 card grid, chart readable."
+          },
+          {
+            "id": 3,
+            "title": "Fix visual issues found in /cash-flow reviews",
+            "description": "Fix all issues from both viewports. Re-verify.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Fix any: card grid not responsive, chart overflow, incorrect colors, numbers not font-mono, TimeRangeToggle overflow, label overlap. Re-screenshot both. Run `task check`.",
+            "status": "pending",
+            "testStrategy": "Re-take screenshots. `task check` passes."
+          }
+        ],
+        "updatedAt": "2026-02-15T12:00:00.000Z"
+      },
+      {
+        "id": 34,
+        "title": "Visual Review — Transactions (/transactions)",
+        "description": "Visually verify the Transactions page after the UI/UX overhaul. Check table styling, icons, and mobile responsiveness. Fix any visual issues found.",
+        "details": "Use Playwright MCP to navigate to http://localhost:5173/transactions and verify:\n\n1. **Emoji icon column**: category emojis display in table rows\n2. **Colored category tag pills**: category names in colored badges\n3. **Review indicator**: amber dot for unreviewed transactions\n4. **Table header styling**: proper alignment and zebra striping\n5. **Mobile responsiveness**: table adapts or scrolls horizontally on mobile\n\nSave screenshots to .screenshots/transactions-desktop.png and .screenshots/transactions-mobile.png. Fix any visual issues.",
+        "testStrategy": "task check passes + visual screenshots at both viewports show correct rendering",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Desktop visual review of /transactions (1280x800)",
+            "description": "Verify table styling, emoji icons, category pills, review dots, filters at desktop.",
+            "dependencies": [],
+            "details": "Navigate to /transactions at 1280x800. Take snapshot — verify: TransactionFilters bar, TransactionTable with columns (date, description, category, amount, reviewed). Screenshot to .screenshots/transactions-desktop.png + fullPage. Check: emoji icons in category column, colored category tag pills, review indicator dots, table header styling, zebra striping, amounts in font-mono with correct green/red coloring, pagination. Hierarchy: primary=table rows, secondary=filter bar + title, tertiary=tags + pagination.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved. Table structure, filters, styled elements confirmed."
+          },
+          {
+            "id": 2,
+            "title": "Mobile visual review of /transactions (390x844)",
+            "description": "Verify table horizontal scroll, filter stacking, no page-level overflow.",
+            "dependencies": [
+              1
+            ],
+            "details": "Resize to 390x844. Take snapshot — verify: table has overflow-x-auto (horizontal scroll within table, not page), filters stack/collapse, all columns accessible via scroll. Screenshot to .screenshots/transactions-mobile.png + fullPage. Check: page doesn't scroll horizontally, amounts readable, category pills don't overflow cells.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved. Horizontal table scroll works, no page overflow."
+          },
+          {
+            "id": 3,
+            "title": "Fix visual issues found in /transactions reviews",
+            "description": "Fix table, filter, and responsiveness issues. Re-verify.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Fix any: table causing page scroll, filters not stacking, category pills overflowing, zebra striping inconsistent, review dots wrong color, amounts not color-coded, pagination hidden on mobile. Re-screenshot both. Run `task check`.",
+            "status": "pending",
+            "testStrategy": "Re-take screenshots. `task check` passes."
+          }
+        ],
+        "updatedAt": "2026-02-15T12:00:00.000Z"
+      },
+      {
+        "id": 35,
+        "title": "Visual Review — Global Elements",
+        "description": "Visually verify global UI elements (AI FAB, sidebar, header, card hover effects) across multiple pages at both viewports. Fix any visual issues found.",
+        "details": "Use Playwright MCP to verify across multiple routes:\n\n1. **AI FAB**: gradient purple button, positioned bottom-right on desktop, hidden on mobile, hidden when chat panel is open\n2. **Card hover effects**: shadow-sm to shadow-md transition on hover\n3. **Sidebar**: navigation links, active state highlighting, collapse behavior\n4. **Header**: title, user info area\n5. **Toaster**: notification positioning\n\nCheck at both desktop (1280x800) and mobile (390x844). Save screenshots to .screenshots/global-desktop.png and .screenshots/global-mobile.png. Fix any visual issues.",
+        "testStrategy": "task check passes + visual screenshots at both viewports show correct rendering of global elements",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Desktop visual review of global elements across 3 routes (1280x800)",
+            "description": "Check Sidebar (w-16, icons, active state), Header, AIFab (gradient purple, bottom-right) on /, /transactions, /assets.",
+            "dependencies": [],
+            "details": "At 1280x800, navigate to /, /transactions, /assets. On each: take snapshot + screenshot (.screenshots/global-desktop-{route}.png). Verify: Sidebar w-16 with centered icons, active icon highlighted, Header title matches route, AIFab at fixed bottom-6 right-6 with gradient purple, card hover shadow-sm→shadow-md. Check consistency across all 3 routes.",
+            "status": "pending",
+            "testStrategy": "3 screenshots saved. Consistent sidebar, header, FAB positioning across routes."
+          },
+          {
+            "id": 2,
+            "title": "Mobile visual review of global elements across 3 routes (390x844)",
+            "description": "Verify Sidebar becomes bottom bar, AIFab hidden, Header adapts on mobile.",
+            "dependencies": [
+              1
+            ],
+            "details": "At 390x844, navigate to /, /transactions, /assets. Take screenshots (.screenshots/global-mobile-{route}.png). Verify: Sidebar transforms to bottom nav bar, AIFab hidden (hidden md:flex), Header adapts, bottom bar doesn't overlap content, icons evenly spaced, active route highlighted. ChatPanel accessible as overlay/sheet.",
+            "status": "pending",
+            "testStrategy": "3 mobile screenshots. Bottom bar present, AIFab hidden, no overflow."
+          },
+          {
+            "id": 3,
+            "title": "Fix visual issues found in global elements reviews",
+            "description": "Fix sidebar, header, FAB, layout issues across viewports. Re-verify.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Fix any: sidebar overlapping content, bottom bar misaligned, AIFab showing on mobile, active icon not highlighted, content not accounting for sidebar/bottom bar. Re-verify all 6 screenshots. Run `task check`.",
+            "status": "pending",
+            "testStrategy": "Re-take all 6 screenshots. `task check` passes."
+          }
+        ],
+        "updatedAt": "2026-02-15T12:00:00.000Z"
+      },
+      {
+        "id": 36,
+        "title": "Visual Review — Goals & Settings (/goals, /settings)",
+        "description": "Visually verify the Goals and Settings pages after the UI/UX overhaul. Check empty states, form layouts, and mobile responsiveness. Fix any visual issues found.",
+        "details": "Use Playwright MCP to navigate to http://localhost:5173/goals and http://localhost:5173/settings and verify:\n\n**Goals page:**\n1. Empty states use EmptyState component\n2. Goal card styling (progress bars, target amounts)\n3. Mobile layout stacks properly\n\n**Settings page:**\n1. Budget management section\n2. Institution list display\n3. Form inputs and toggles render correctly\n4. Mobile layout\n\nSave screenshots to .screenshots/goals-desktop.png, .screenshots/goals-mobile.png, .screenshots/settings-desktop.png, .screenshots/settings-mobile.png. Fix any visual issues.",
+        "testStrategy": "task check passes + visual screenshots at both viewports show correct rendering",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Desktop and mobile visual review of /goals",
+            "description": "Review goals page at both 1280x800 and 390x844 — card grid, progress bars, amounts, empty state.",
+            "dependencies": [],
+            "details": "Desktop (1280x800): Navigate to /goals. Take snapshot + screenshot (.screenshots/goals-desktop.png + fullPage). Verify: cards in md:grid-cols-2, colored top border, progress bar, current/target in font-mono, deadline text, dropdown menu, EmptyState if no goals. Mobile (390x844): cards stack single column, progress bar full width, dropdown accessible. Screenshot to .screenshots/goals-mobile.png + fullPage. Check hierarchy: primary=progress bars + amounts, secondary=icon/name/deadline, tertiary=add button + menu.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved for both viewports. Grid layout and empty states verified."
+          },
+          {
+            "id": 2,
+            "title": "Desktop and mobile visual review of /settings",
+            "description": "Review settings page at both viewports — budget table, institution list, credentials, sync status.",
+            "dependencies": [],
+            "details": "Desktop (1280x800): Navigate to /settings. Take snapshot + screenshot (.screenshots/settings-desktop.png + fullPage). Verify: Language/Theme selects, Credentials with masked values, Budget grid table (category/amount/color), Institution rows with toggles, Sync status badge. Mobile (390x844): sections stack vertically, budget table scrolls horizontally, toggles accessible. Screenshot to .screenshots/settings-mobile.png + fullPage. Check hierarchy: primary=budget table, secondary=institution list + sync, tertiary=selects + total.",
+            "status": "pending",
+            "testStrategy": "Screenshots saved for both viewports. All sections present and functional."
+          },
+          {
+            "id": 3,
+            "title": "Fix visual issues found on /goals",
+            "description": "Fix goals layout, spacing, responsiveness issues. Re-verify.",
+            "dependencies": [
+              1
+            ],
+            "details": "Fix any: cards not stacking on mobile, progress bar overflow, colored border missing, dropdown off-screen, EmptyState not centered, form dialog not responsive, amounts not font-mono. Re-screenshot both viewports. Run `task check`.",
+            "status": "pending",
+            "testStrategy": "Re-take screenshots. `task check` passes."
+          },
+          {
+            "id": 4,
+            "title": "Fix visual issues found on /settings",
+            "description": "Fix settings layout, spacing, responsiveness issues. Re-verify.",
+            "dependencies": [
+              2
+            ],
+            "details": "Fix any: budget table overflow without scroll, select dropdowns not full-width on mobile, credential masking issues, institution toggles too small, sync badge misaligned, section spacing inconsistent. Re-screenshot both viewports. Run `task check`.",
+            "status": "pending",
+            "testStrategy": "Re-take screenshots. `task check` passes."
+          }
+        ],
+        "updatedAt": "2026-02-15T12:00:00.000Z"
+      }
+    ],
+    "metadata": {
+      "version": "1.0.0",
+      "lastModified": "2026-02-15T10:56:56.659Z",
+      "taskCount": 24,
+      "completedCount": 15,
+      "tags": [
+        "master"
+      ],
+      "created": "2026-02-15T14:04:32.239Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

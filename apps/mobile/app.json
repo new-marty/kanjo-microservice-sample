@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Kanjo",
+    "slug": "kanjo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "kanjo",
+    "platforms": ["ios", "android"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      }
+    }
+  }
+}

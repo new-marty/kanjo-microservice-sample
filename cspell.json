@@ -1,0 +1,26 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "gofmt",
+    "goimports",
+    "golangci",
+    "knip",
+    "orval",
+    "sqlc",
+    "pnpm",
+    "turbo",
+    "goose",
+    "tanstack",
+    "nuqs",
+    "zustand",
+    "valibot",
+    "neverthrow",
+    "fontsource",
+    "recharts",
+    "shadcn",
+    "monorepo",
+    "kanjo"
+  ],
+  "ignorePaths": ["node_modules", "dist", "pnpm-lock.yaml", "*.gen.ts"]
+}

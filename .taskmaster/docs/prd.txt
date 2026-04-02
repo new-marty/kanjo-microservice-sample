@@ -1,0 +1,58 @@
+# Kanjo — Product Requirements Document
+
+## Overview
+
+Kanjo is a single-user personal finance application that wraps MoneyForward ME, providing enhanced visualization, analysis, and AI-powered categorization. It's a personal tool, not a SaaS product.
+
+## Current State
+
+### Implemented
+- Monorepo structure with Go API, React web app, Python transform job
+- Database schema with mf_raw (scraper-owned) and kanjo (app-owned) separation
+- Scraper job for MoneyForward ME data ingestion
+- Transform pipeline with rule-based + LLM categorization (OpenRouter)
+- Web dashboard with mock data (React 19, Vite, TanStack Router/Query)
+- Full code generation pipeline: SQL → sqlc → OpenAPI → Orval → TypeScript client
+- Component library (shadcn/ui), design system (light mode)
+- Pre-commit hooks, CI pipeline, comprehensive linting
+
+### Not Yet Implemented
+- Live data flowing through API (endpoints return mock data)
+- Mobile app (Expo, deferred)
+- Authentication
+- Budget tracking (tables exist, UI/API not wired)
+- Savings goals (tables exist, UI/API not wired)
+- AI insights generation
+- AI chat interface
+- Dark mode
+
+## Tech Stack
+
+- Backend: Go 1.23 + Gin + sqlc
+- Frontend: React 19 + Vite + TypeScript
+- Mobile: React Native + Expo (deferred)
+- Transform: Python 3.12 + uv
+- Database: PostgreSQL 17
+- Package managers: pnpm (TS), uv (Python)
+
+## Near-Term Goals
+
+1. Wire up real data flow from scraper → transform → API → web dashboard
+2. Implement core API endpoints with live database queries
+3. Connect React components to real API data (replace mocks)
+4. Budget management UI
+5. Transaction review and correction flow
+6. Savings goal tracking
+
+## Design Principles
+
+- Build only what's needed now
+- Single user, single purpose
+- Integer yen, no floating point for financial data
+- AI categorization: rules first, LLM fallback, user corrections as training data
+- Light mode only initially
+- Accessible: keyboard nav, ARIA, semantic HTML
+
+## Data Flow
+
+MoneyForward ME → Scraper (TS) → mf_raw schema → NOTIFY → Transform (Python) → kanjo schema → Go API → Web/Mobile

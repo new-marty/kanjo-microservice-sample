@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:17
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: kanjo
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dev -d kanjo']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  scraper:
+    build:
+      context: .
+      dockerfile: jobs/scraper/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://dev:dev@postgres:5432/kanjo
+      MF_EMAIL: ${MF_EMAIL}
+      MF_PASSWORD: ${MF_PASSWORD}
+      GMAIL_USER: ${GMAIL_USER:-}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD:-}
+      BLUEBUBBLES_URL: ${BLUEBUBBLES_URL:-}
+      BLUEBUBBLES_PASSWORD: ${BLUEBUBBLES_PASSWORD:-}
+      MF_USER_DATA_DIR: /app/.mf-user-data
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    volumes:
+      - scraper_data:/app/.mf-user-data
+    profiles:
+      - scraper
+
+  transform:
+    build:
+      context: .
+      dockerfile: jobs/transform/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://dev:dev@postgres:5432/kanjo
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-anthropic/claude-haiku-4.5}
+    profiles:
+      - transform
+
+volumes:
+  pgdata:
+  scraper_data:

@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.next/
+.expo/
+
+# Go
+apps/api/tmp/
+apps/api/server
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Generated (committed selectively)
+# packages/api-client/src/generated/ — commit this so CI doesn't need Go
+
+# Turborepo
+.turbo/
+
+# Testing
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+!.claude/skills/
+!.claude/commands/
+.mcp.json
+
+# Visual verification screenshots
+.screenshots/
+
+# Scraper browser data
+jobs/scraper/.mf-user-data/
+
+# Logs
+logs
+*.log
+npm-debug.log*

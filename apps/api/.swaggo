@@ -1,0 +1,7 @@
+replace github.com/jackc/pgx/v5/pgtype.Date string
+replace github.com/jackc/pgx/v5/pgtype.Text string
+replace github.com/jackc/pgx/v5/pgtype.Timestamptz string
+replace github.com/jackc/pgx/v5/pgtype.Int4 integer
+replace github.com/jackc/pgx/v5/pgtype.Int8 integer
+replace github.com/jackc/pgx/v5/pgtype.Bool boolean
+replace github.com/jackc/pgx/v5/pgtype.UUID string

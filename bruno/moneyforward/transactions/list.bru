@@ -1,0 +1,17 @@
+meta {
+  name: List Transactions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/transactions
+  params {
+    limit: 50
+    offset: 0
+  }
+}
+
+assert {
+  res.status: eq 200
+}

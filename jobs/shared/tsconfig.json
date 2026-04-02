@@ -1,0 +1,7 @@
+{
+  "extends": "@repo/tsconfig/node.json",
+  "include": ["src", "vitest.config.ts"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}

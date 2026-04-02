@@ -1,0 +1,11 @@
+{
+  "extends": "@repo/tsconfig/react.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "noEmit": true,
+    "ignoreDeprecations": "5.0"
+  }
+}

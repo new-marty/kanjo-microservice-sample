@@ -1,0 +1,10 @@
+{
+  "extends": "@repo/tsconfig/node.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  }
+}
