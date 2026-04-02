@@ -14,7 +14,7 @@
 
 **Why:** Japanese yen has no subunit (no cents). Floating point introduces precision bugs that are unacceptable for financial data. Integer math is exact.
 
-**What it means:** `amount INTEGER NOT NULL` everywhere. `1234` means ¥1,234. Use `formatYen()` from `@repo/shared` for display.
+**What it means:** `amount INTEGER NOT NULL` everywhere. `1234` means ¥1,234.
 
 ## Transaction Deduplication by Hash
 

@@ -1,9 +1,6 @@
 node_modules/
 dist/
-.next/
-.expo/
 .turbo/
 coverage/
 apps/api/
-packages/api-client/src/generated/
 pnpm-lock.yaml

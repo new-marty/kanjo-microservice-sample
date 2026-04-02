@@ -3,8 +3,6 @@ node_modules/
 
 # Build outputs
 dist/
-.next/
-.expo/
 
 # Go
 apps/api/tmp/
@@ -24,9 +22,6 @@ apps/api/server
 *.njsproj
 *.sln
 
-# Generated (committed selectively)
-# packages/api-client/src/generated/ — commit this so CI doesn't need Go
-
 # Turborepo
 .turbo/
 
@@ -44,9 +39,6 @@ Thumbs.db
 !.claude/skills/
 !.claude/commands/
 .mcp.json
-
-# Visual verification screenshots
-.screenshots/
 
 # Scraper browser data
 jobs/scraper/.mf-user-data/

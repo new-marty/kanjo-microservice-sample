@@ -38,9 +38,8 @@ The API participates in a three-step generation pipeline:
 
 1. **SQL → Go:** `db/queries/*.sql` → sqlc → `internal/repository/`
 2. **Go → OpenAPI:** Handler annotations → openapi-gen → `api/openapi.yaml`
-3. **OpenAPI → TypeScript:** `openapi.yaml` → Orval → `packages/api-client/`
 
-Run `task generate` to execute all steps, or individual steps with `task generate:sqlc`, `task generate:openapi`, `task generate:client`.
+Run `task generate` to execute all steps, or individual steps with `task generate:sqlc`, `task generate:openapi`.
 
 ## Adding an Endpoint
 

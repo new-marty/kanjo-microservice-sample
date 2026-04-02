@@ -5,22 +5,11 @@
     "gofmt",
     "goimports",
     "golangci",
-    "knip",
-    "orval",
     "sqlc",
     "pnpm",
     "turbo",
     "goose",
-    "tanstack",
-    "nuqs",
-    "zustand",
-    "valibot",
-    "neverthrow",
-    "fontsource",
-    "recharts",
-    "shadcn",
-    "monorepo",
     "kanjo"
   ],
-  "ignorePaths": ["node_modules", "dist", "pnpm-lock.yaml", "*.gen.ts"]
+  "ignorePaths": ["node_modules", "dist", "pnpm-lock.yaml"]
 }
