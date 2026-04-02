@@ -1,7 +1,0 @@
-{
-  "extends": "@repo/tsconfig/react.json",
-  "include": ["src"],
-  "compilerOptions": {
-    "noEmit": true
-  }
-}

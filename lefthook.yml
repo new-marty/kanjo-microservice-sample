@@ -1,21 +1,6 @@
 pre-commit:
   parallel: true
   commands:
-    prettier:
-      glob: '*.{ts,tsx,js,jsx,json,md,css}'
-      run: pnpm prettier --check {staged_files}
-    eslint:
-      glob: '*.{ts,tsx,js,jsx}'
-      run: pnpm turbo lint
-    typecheck:
-      glob: '*.{ts,tsx,js,jsx}'
-      run: pnpm turbo typecheck
-    knip:
-      glob: '*.{ts,tsx,js,jsx}'
-      run: pnpm knip
-    ts-test:
-      glob: '*.{ts,tsx}'
-      run: pnpm turbo test
     go-lint:
       glob: '*.go'
       run: cd apps/api && golangci-lint run ./...

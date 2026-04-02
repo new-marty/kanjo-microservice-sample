@@ -4,7 +4,7 @@ tasks:
   # ---- Development ----
   dev:
     desc: Start all services for local development
-    deps: [dev:db, dev:api, dev:web]
+    deps: [dev:db, dev:api]
 
   dev:api:
     desc: Start Go API with live reload
@@ -13,16 +13,6 @@ tasks:
     cmds:
       - air
 
-  dev:web:
-    desc: Start Vite dev server
-    cmds:
-      - pnpm turbo dev --filter=@repo/web
-
-  dev:mobile:
-    desc: Start Expo dev server
-    cmds:
-      - pnpm turbo dev --filter=@repo/mobile
-
   dev:db:
     desc: Start Postgres via Docker Compose
     cmds:
@@ -30,21 +20,16 @@ tasks:
 
   # ---- Code Generation ----
   generate:
-    desc: Generate OpenAPI spec and TS client
+    desc: Generate OpenAPI spec and sqlc code
     cmds:
       - task: generate:openapi
-      - task: generate:client
+      - task: generate:sqlc
 
   generate:openapi:
     desc: Generate OpenAPI YAML from Go code
     dir: apps/api
     cmds:
       - go run ./cmd/openapi-gen 2>/dev/null > ./api/openapi.yaml
-
-  generate:client:
-    desc: Generate TS client from OpenAPI spec
-    cmds:
-      - pnpm turbo generate --filter=@repo/api-client
 
   generate:sqlc:
     desc: Generate Go DB code from SQL queries
@@ -82,47 +67,31 @@ tasks:
 
   # ---- Quality ----
   lint:
-    desc: Lint everything
+    desc: Lint Go code
     cmds:
-      - pnpm turbo lint
       - cd apps/api && golangci-lint run ./...
 
-  typecheck:
-    desc: TypeScript type checking
-    cmds:
-      - pnpm turbo typecheck
-
   test:
-    desc: Run all tests
+    desc: Run Go tests
     cmds:
-      - pnpm turbo test
       - cd apps/api && go test -p 1 ./...
 
   format:
     desc: Format all code
     cmds:
-      - pnpm prettier --write .
       - cd apps/api && gofmt -w .
       - cd apps/api && goimports -w .
 
-  knip:
-    desc: Find unused exports and dependencies
-    cmds:
-      - pnpm knip
-
   check:
-    desc: Run all checks (lint + typecheck + test + knip)
+    desc: Run all checks (lint + test)
     cmds:
       - task: lint
-      - task: typecheck
       - task: test
-      - task: knip
 
   # ---- Build ----
   build:
-    desc: Build all packages
+    desc: Build Go API binary
     cmds:
-      - pnpm turbo build
       - cd apps/api && go build -o ./tmp/server ./cmd/server
 
   # ---- Scraper ----
@@ -193,6 +162,4 @@ tasks:
   clean:
     desc: Clean all build artifacts
     cmds:
-      - pnpm turbo clean
       - rm -rf apps/api/tmp
-      - rm -rf node_modules/.cache

@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "prettier": "@repo/prettier-config",
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "test": "turbo test",
@@ -16,12 +13,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@repo/prettier-config": "workspace:*",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
     "eslint": "^9.39.2",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.5.0",
     "knip": "^5.83.1",
     "lefthook": "^2.1.0",
     "prettier": "^3.8.1",

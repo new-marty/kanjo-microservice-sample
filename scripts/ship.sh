@@ -31,10 +31,7 @@ if ! git diff --quiet; then
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
 fi
 
-# 4. Check if UI review is overdue (warning only)
-bash scripts/check-ui-review.sh
-
-# 5. Run all checks (lint + typecheck + test + knip + go checks)
+# 4. Run all checks
 echo "==> Running checks..."
 task check
 
