@@ -90,9 +90,10 @@ tasks:
 
   # ---- Build ----
   build:
-    desc: Build Go API binary
+    desc: Build Go API server and CLI
     cmds:
       - cd apps/api && go build -o ./tmp/server ./cmd/server
+      - cd apps/api && go build -o ./tmp/kanjo ./cmd/kanjo
 
   # ---- Scraper ----
   scraper:fetch:

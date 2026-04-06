@@ -27,7 +27,7 @@ task dev:db           # Start Postgres via Docker Compose
 ### Build, Test, Lint
 
 ```bash
-task build            # Build Go API binary
+task build            # Build Go API server and CLI
 task lint             # Lint Go code (golangci-lint)
 task test             # Run Go tests
 task format           # Format Go code (gofmt + goimports)
@@ -125,12 +125,15 @@ docs/          # See docs/README.md for navigation
 
 ### API Backend (apps/api/)
 
-- Handlers in `internal/handler/` - HTTP endpoints
-- Services in `internal/service/` - Business logic
-- Repository in `internal/repository/` - Generated sqlc code
-- Migrations in `db/migrations/` - Goose SQL migrations
-- SQL queries in `db/queries/` - Source for sqlc generation
-- OpenAPI spec at `api/openapi.yaml`
+- `cmd/server/` - API server entry point
+- `cmd/kanjo/` - CLI entry point (cobra)
+- `internal/handler/` - HTTP endpoints
+- `internal/service/` - Business logic
+- `internal/repository/` - Generated sqlc code
+- `internal/cli/` - CLI commands (thin HTTP client wrapping API)
+- `db/migrations/` - Goose SQL migrations
+- `db/queries/` - Source for sqlc generation
+- `api/openapi.yaml` - OpenAPI spec
 
 ### Code Generation Flow
 
@@ -204,6 +207,12 @@ When choosing new dependencies, prioritize:
 - **Environment:** API expects `DATABASE_URL` for PostgreSQL connection
 - **Python jobs:** Use uv for package management, structlog for logging, pydantic-settings for config
 
+## API-CLI Parity Rule
+
+**Every API endpoint must have exactly one CLI command, and every CLI command must map to exactly one API endpoint.** No endpoint without a CLI command, no CLI command without an endpoint.
+
+The CLI (`cmd/kanjo/`) is a thin HTTP client that calls the API server. It uses cobra for command structure.
+
 ## Adding a New API Endpoint
 
 1. Add Go handler in `apps/api/internal/handler/` with swag annotations (`@ID`, `@Summary`, `@Tags`, `@Param`, `@Success`, `@Router`)
@@ -211,3 +220,4 @@ When choosing new dependencies, prioritize:
 3. Run `task generate:sqlc` (if SQL changed)
 4. Register route in `apps/api/cmd/server/main.go`
 5. Run `task generate:openapi` to regenerate OpenAPI spec
+6. Add corresponding CLI command in `apps/api/internal/cli/`
