@@ -154,6 +154,16 @@ Scraper (TS) → mf_raw.* → NOTIFY → Transform (Python) → kanjo.* → API 
 
 See [docs/architecture/data-flow.md](docs/architecture/data-flow.md) for the full pipeline, [docs/principles/data.md](docs/principles/data.md) for data constraints and ML strategy.
 
+## AI Tool-Calling
+
+The API exposes itself to LLM agents (Anthropic, OpenAI, etc.) via three discovery routes — no MCP server, no separate dispatcher:
+
+- `GET /openapi.json` — full OpenAPI 3 spec
+- `GET /tools/openai.json` — tools in OpenAI's `{type:"function", function:{...}}` shape
+- `GET /tools/anthropic.json` — tools in Anthropic's `{name, description, input_schema}` shape
+
+Each tool's `description` ends with `Invoke: METHOD /path`. The agent reads that line, fills `{path}` placeholders from its tool input, and hits the existing REST route directly. The OpenAPI spec is the single source of truth; the manifests are derived once at server startup. CLI parity: `kanjo openapi`, `kanjo tools openai`, `kanjo tools anthropic`. See [docs/agents.md](docs/agents.md) for SDK examples.
+
 ## Documentation
 
 - Use Mermaid for diagrams, never ASCII art

@@ -37,6 +37,13 @@ tasks:
     cmds:
       - sqlc generate
 
+  tools:export:
+    desc: Print AI tool manifests (openapi.json, openai, anthropic)
+    cmds:
+      - 'echo "--- /openapi.json ---" && curl -s http://localhost:8080/openapi.json | jq ".info.title, (.paths | keys | length)"'
+      - 'echo "--- /tools/openai.json ---" && curl -s http://localhost:8080/tools/openai.json | jq ".tools | length"'
+      - 'echo "--- /tools/anthropic.json ---" && curl -s http://localhost:8080/tools/anthropic.json | jq ".tools | length"'
+
   # ---- Database ----
   migrate:
     desc: Run database migrations
