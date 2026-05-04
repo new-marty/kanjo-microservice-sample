@@ -29,6 +29,8 @@ func newRootCmd() *cobra.Command {
 		newInstitutionsCmd(),
 		newSettingsCmd(),
 		newSyncCmd(),
+		newOpenAPICmd(),
+		newToolsCmd(),
 	)
 
 	return cmd

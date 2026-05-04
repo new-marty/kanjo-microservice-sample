@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	apispec "github.com/new-marty/kanjo/api"
 	"github.com/new-marty/kanjo/config"
 	"github.com/new-marty/kanjo/internal/db"
 	"github.com/new-marty/kanjo/internal/handler"
@@ -18,6 +19,7 @@ import (
 	"github.com/new-marty/kanjo/internal/middleware"
 	"github.com/new-marty/kanjo/internal/repository"
 	"github.com/new-marty/kanjo/internal/service"
+	"github.com/new-marty/kanjo/internal/toolspec"
 )
 
 func main() {
@@ -83,8 +85,21 @@ func main() {
 		return val
 	})
 
+	// Build LLM tool manifests once at startup from the embedded OpenAPI spec.
+	toolsOpenAI, toolsAnthropic, err := toolspec.Build(apispec.OpenAPIYAML)
+	if err != nil {
+		slog.Error("failed to build tool manifests", "error", err)
+		os.Exit(1)
+	}
+	openapiJSON, err := apispec.OpenAPIJSON()
+	if err != nil {
+		slog.Error("failed to convert openapi yaml to json", "error", err)
+		os.Exit(1)
+	}
+
 	// Create handlers
 	healthHandler := handler.NewHealthHandler(pool)
+	specHandler := handler.NewSpecHandler(openapiJSON, toolsOpenAI, toolsAnthropic)
 	transactionHandler := handler.NewTransactionHandler(transactionSvc)
 	analyticsHandler := handler.NewAnalyticsHandler(analyticsSvc)
 	budgetHandler := handler.NewBudgetHandler(budgetSvc)
@@ -104,6 +119,11 @@ func main() {
 
 	// Health check
 	r.GET("/api/health", healthHandler.Health)
+
+	// AI tool-calling discovery (public, no auth, no timeout — see docs/agents.md)
+	r.GET("/openapi.json", specHandler.OpenAPI)
+	r.GET("/tools/openai.json", specHandler.ToolsOpenAI)
+	r.GET("/tools/anthropic.json", specHandler.ToolsAnthropic)
 
 	// API v1 routes
 	api := r.Group("/api/v1")
